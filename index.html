@@ -7,7 +7,7 @@
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
 <meta name="title" content="第4回 Functional忍者 Option → Try → Future"/>
 <meta name="generator" content="Org-mode"/>
-<meta name="generated" content="2013-12-09 18:17:05 JST"/>
+<meta name="generated" content="2013-12-10 18:29:34 JST"/>
 <meta name="author" content="Yasuyuki Maeda(@maeda_)"/>
 <meta name="description" content=""/>
 <meta name="keywords" content=""/>
@@ -279,7 +279,7 @@ stringSucc("unknown")  // None
 def stringAdd(x: String, y: String):Option[Int] = {
   val optX = dict.get(x)
   val optY = dict.get(y)
-  optX.flatMap{ a =&gt;  // このflatMapをmapにするとOption[Option[Int]]になるので、flattenが必要になる。map + flatten = flatMap
+  optX.flatMap{ a =&gt;  // このflatMapをmapにするとOption[Option[Int]]になるので、flattenが必要になる。map + flatten = flatMap (※)
     optY.map{ b =&gt;
       a + b
     }
@@ -288,6 +288,8 @@ def stringAdd(x: String, y: String):Option[Int] = {
 
 stringAdd("one", "two")         // Some(3)
 stringAdd("one", "unknown")     // None
+
+(※) 実際の実装はmapしてflattenしているわけではありません。
 </pre>
 
 
@@ -530,7 +532,8 @@ map, flatMap, filterはOptionと同じように使える。
 <div class="outline-text-3" id="text-3-2">
 
 <ol>
-<li>Try型のmap, flatMap,filterの動作を確認しましょう。
+<li>Try型のmap, flatMap,filterの動作を確認しましょう。特に例外が発生したときの動作を確認してください。
+   Tryの実装を確認しましょう。(scala.util.control.NonFatalはExtractorです。)
 
 </li>
 <li>Map[A,B]#get(key:A):Option[B]メソッドについて、戻り値がTry[B]のバージョンの関数を作りましょう。
@@ -644,7 +647,7 @@ x.value
 </div>
 
 <div id="postamble">
-<p class="date">Date: 2013-12-09 18:17:05 JST</p>
+<p class="date">Date: 2013-12-10 18:29:34 JST</p>
 <p class="author">Author: Yasuyuki Maeda(@maeda_)</p>
 <p class="creator">Org version 7.8.11 with Emacs version 24</p>
 <a href="http://validator.w3.org/check?uri=referer">Validate XHTML 1.0</a>
