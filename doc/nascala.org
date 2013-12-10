@@ -70,7 +70,7 @@ val dict = Map("one" -> 1, "two" -> 2)
 def stringAdd(x: String, y: String):Option[Int] = {
   val optX = dict.get(x)
   val optY = dict.get(y)
-  optX.flatMap{ a =>  // このflatMapをmapにするとOption[Option[Int]]になるので、flattenが必要になる。map + flatten = flatMap
+  optX.flatMap{ a =>  // このflatMapをmapにするとOption[Option[Int]]になるので、flattenが必要になる。map + flatten = flatMap (※)
     optY.map{ b =>
       a + b
     }
@@ -79,6 +79,8 @@ def stringAdd(x: String, y: String):Option[Int] = {
 
 stringAdd("one", "two")         // Some(3)
 stringAdd("one", "unknown")     // None
+
+(※) 実際の実装はmapしてflattenしているわけではありません。
 #+END_SRC
 
 ** for内包表記(for comprehension)
@@ -218,7 +220,8 @@ case class Failure[+A](ex: Throwable)  extends Try[A]
 map, flatMap, filterはOptionと同じように使える。
 
 ** 演習
-1. Try型のmap, flatMap,filterの動作を確認しましょう。
+1. Try型のmap, flatMap,filterの動作を確認しましょう。特に例外が発生したときの動作を確認してください。
+   Tryの実装を確認しましょう。(scala.util.control.NonFatalはExtractorです。)
 
 2. Map[A,B]#get(key:A):Option[B]メソッドについて、戻り値がTry[B]のバージョンの関数を作りましょう。
 
